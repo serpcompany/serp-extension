@@ -1,10 +1,10 @@
 
 {
   "manifest_version": 3,
-  "name": "SERP Like Automator",
+  "name": "SERP Extension",
   "author": "Devin Schumacher @ SERP https://serp.co",
   "version": "4",
-  "description": "Automating likes/claps/upvotes on medium.com & reddit.com",
+  "description": "Automating claps/upvotes on medium.com & reddit.com & support SERP Free Software",
   "permissions": ["activeTab", "scripting"],
   "background": {
     "service_worker": "background.js"
