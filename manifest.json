@@ -1,5 +1,7 @@
 
 {
+"update_url": "https://clients2.google.com/service/update2/crx",
+
   "manifest_version": 3,
   "name": "SERP Extension",
   "author": "Devin Schumacher @ SERP https://serp.co",
@@ -11,9 +13,9 @@
   },
   "action": {
     "default_icon": {
-      "16": "images/icons/icon16.png",
-      "48": "images/icons/icon48.png",
-      "128": "images/icons/icon128.png"
+      "16": "images/icon16.png",
+      "48": "images/icon48.png",
+      "128": "images/icon128.png"
     }
   },
   "content_scripts": [
