@@ -1,5 +1,5 @@
 // js/amazon.js
-const amazonTag = 'serpext-20';
+const amazonTag = 'serpextension-20';
 
 function updateAmazonLinks() {
   document.querySelectorAll('a[href*="amazon.com"]').forEach(link => {
