@@ -15,9 +15,9 @@ async function mediumScript() {
     console.log(speedSettings)
 
     speedSettings = {
-        scrollDelay: isNaN(speedSettings.scrollDelay) ? 3000:speedSettings.scrollDelay,
-        navigationDelay: isNaN(speedSettings.navigationDelay) ? randomDelay(500, 1500):speedSettings.navigationDelay,
-        clapActionDelay: isNaN(speedSettings.clapActionDelay) ? randomDelay(100, 400):speedSettings.clapActionDelay,
+        scrollDelay: isNaN(speedSettings.scrollDelay) ? 3000:speedSettings.scrollDelay*1000,
+        navigationDelay: isNaN(speedSettings.navigationDelay) ? randomDelay(500, 1500):speedSettings.navigationDelay*1000,
+        clapActionDelay: isNaN(speedSettings.clapActionDelay) ? randomDelay(100, 400):speedSettings.clapActionDelay*1000,
     }
     
     console.log(speedSettings)

@@ -41,6 +41,7 @@ window.addEventListener("load", async () => {
 
         //store data to local storage
         await chrome.storage.local.set({"medium-speed-settings":speedSettings})
+
         showSuccessMessage()
         setTimeout(()=>{
             hideSuccessMessage()
