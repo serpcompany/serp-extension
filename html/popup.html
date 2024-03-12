@@ -1,0 +1,38 @@
+<head>    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.0.2/tailwind.min.css" rel="stylesheet">
+    
+    <script src="../js/popup.js"></script>
+</head>
+
+<body style="width:400px;height:400px">
+    <div class="settings-container">
+        <div class="w-full h-full pt-8">
+            <form class="bg-white rounded px-8 pt-6 pb-8 mb-4">
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="clap-action-delay">
+                    Clap action delay (in ms)
+                    </label>
+                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="clap-action-delay" type="number" placeholder="1000" min="100">
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="navigation-delay">
+                    Navigation delay (in ms)
+                    </label>
+                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="navigation-delay" type="number" placeholder="1000" min="100">
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="scroll-delay">
+                    Scroll delay (in ms)
+                    </label>
+                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="scroll-delay" type="number" placeholder="1000" min="100">
+                </div>
+                <p id="success-alert" class="w-full text-green-500 text-md font-bold py-1 hidden">Settings Saved</p>
+                <div class="flex items-center justify-between">
+                    <button id="save-settings-btn" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
+                    Save settings
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>

@@ -1,9 +1,26 @@
+
+
 async function mediumScript() {
     const events = ['mousedown', 'mouseup', 'click'];
 
     function randomDelay(min, max) {
         return Math.floor(Math.random() * (max - min + 1)) + min;
     }
+
+    const storageGet = (key) => new Promise((resolve) => chrome.storage.local.get(key).then((data) => resolve(data[key])))
+
+    //load user speed settings, assign it with an empty object if it hasnt been assigned by user
+    let speedSettings = await storageGet("medium-speed-settings") ?? {} 
+    
+    console.log(speedSettings)
+
+    speedSettings = {
+        scrollDelay: isNaN(speedSettings.scrollDelay) ? 3000:speedSettings.scrollDelay,
+        navigationDelay: isNaN(speedSettings.navigationDelay) ? randomDelay(500, 1500):speedSettings.navigationDelay,
+        clapActionDelay: isNaN(speedSettings.clapActionDelay) ? randomDelay(100, 400):speedSettings.clapActionDelay,
+    }
+    
+    console.log(speedSettings)
 
     async function performClaps(clapButton) {
         clapButton.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -25,8 +42,9 @@ async function mediumScript() {
                 });
                 clapButton.dispatchEvent(event);
             }
-
-            await new Promise(resolve => setTimeout(resolve, randomDelay(100, 400))); // Random delay between 50ms and 200ms
+             
+            //random delay between each clap action is either read from user's speed settings or Random delay between 100ms and 400ms
+            await new Promise(resolve => setTimeout(resolve, speedSettings.clapActionDelay));
         }
     }
 
@@ -37,12 +55,12 @@ async function mediumScript() {
 
         for (const clapButton of clapButtons) {
             await performClaps(clapButton);
-            await new Promise(resolve => setTimeout(resolve, randomDelay(500, 1500))); // Wait 0.5 to 1 second before next button
+            await new Promise(resolve => setTimeout(resolve, speedSettings.navigationDelay)); // Read user delay or Wait 0.5 to 1 second before next button
         }
 
         // Scroll down and wait for potential new content
         window.scrollBy(0, window.innerHeight);
-        await new Promise(resolve => setTimeout(resolve, 3000)); // Wait for 3 seconds
+        await new Promise(resolve => setTimeout(resolve, speedSettings.scrollDelay)); // Read user delay or Wait for 3 seconds
 
         // Recheck for new clap buttons
         clapButtons = document.querySelectorAll('.clapButton, button:has(svg[aria-label="clap"])');
