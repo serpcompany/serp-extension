@@ -1,6 +1,6 @@
 // background.js
 
-//replace action.onCLicked with message event since the onclicked event is not sent when a popup action page is included
+//replace action.onCLicked event listener with onMessage event listener
 chrome.runtime.onMessage.addListener((message,sender,sendResponse) => {
     if(message.command === 'execute-script')
     {

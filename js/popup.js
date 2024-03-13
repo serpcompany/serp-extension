@@ -1,11 +1,9 @@
-chrome.runtime.sendMessage({command:"execute-script"})
-
-
 //add listeners after the UI is loaded
 window.addEventListener("load", async () => {
     
-    //Initialize variables and functions
+    //Initialize variables, functions and dom selectors
     const saveSettingsBtn = document.getElementById("save-settings-btn")
+    const runScriptBtn = document.getElementById("run-script-btn")
     const successToast = document.getElementById("success-alert")
     const clapSpeedFld = document.getElementById("clap-action-delay")
     const navigationSpeedFld = document.getElementById("navigation-delay")
@@ -26,6 +24,10 @@ window.addEventListener("load", async () => {
     const isValidDelay = (value) => {
         if(value <= 0 || isNaN(value)) return false
         return true
+    }
+
+    const runScript = () => {
+        chrome.runtime.sendMessage({command:"execute-script"})
     }
 
     const storeSettings = async () => {
@@ -56,5 +58,6 @@ window.addEventListener("load", async () => {
     scrollSpeedFld.value = speedSettings.scrollDelay
 
     saveSettingsBtn.addEventListener("click", storeSettings);
+    runScriptBtn.addEventListener("click", runScript);
 })
 
