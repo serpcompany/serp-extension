@@ -11,16 +11,13 @@ async function mediumScript() {
 
     //load user speed settings, assign it with an empty object if it hasnt been assigned by user
     let speedSettings = await storageGet("medium-speed-settings") ?? {} 
-    
-    console.log(speedSettings)
 
+    //If the user keeps settings field empty, random ranges will be assigned
     speedSettings = {
         scrollDelay: isNaN(speedSettings.scrollDelay) ? 3000:speedSettings.scrollDelay*1000,
         navigationDelay: isNaN(speedSettings.navigationDelay) ? randomDelay(500, 1500):speedSettings.navigationDelay*1000,
         clapActionDelay: isNaN(speedSettings.clapActionDelay) ? randomDelay(100, 400):speedSettings.clapActionDelay*1000,
     }
-    
-    console.log(speedSettings)
 
     async function performClaps(clapButton) {
         clapButton.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
