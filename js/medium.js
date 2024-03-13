@@ -3,10 +3,12 @@
 async function mediumScript() {
     const events = ['mousedown', 'mouseup', 'click'];
 
+    //Suggestion: Move randomDelay to Utility/helper script
     function randomDelay(min, max) {
         return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
+    //Suggestion: Move storageGet to Utility/helper script
     const storageGet = (key) => new Promise((resolve) => chrome.storage.local.get(key).then((data) => resolve(data[key])))
 
     //load user speed settings, assign it with an empty object if it hasnt been assigned by user

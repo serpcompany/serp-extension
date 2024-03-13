@@ -9,6 +9,7 @@ window.addEventListener("load", async () => {
     const navigationSpeedFld = document.getElementById("navigation-delay")
     const scrollSpeedFld = document.getElementById("scroll-delay")
 
+    //Suggestion: Move storageGet to Utility/helper script
     const storageGet = (key) => new Promise((resolve) => chrome.storage.local.get(key).then((data) => resolve(data[key])))
 
     const showSuccessMessage = () => {
