@@ -49,6 +49,7 @@ function getStorageValue(key) {
 const redditBtn = document.getElementById("redditBtn");
 redditBtn.onclick = startReddit;
 const mediumBtn = document.getElementById("mediumBtn");
+mediumBtn.onclick = startMedium;
 // const amazonBtn = document.getElementById("amazonBtn");
 
 let activePlatform;
@@ -60,8 +61,8 @@ chrome.storage.local.get(["activePlatform"], function (result) {
     redditBtn.removeAttribute("disabled");
   } else if (activePlatform === "medium") {
     mediumBtn.removeAttribute("disabled");
-  // } else if (activePlatform === "amazon") {
-  //   amazonBtn.removeAttribute("disabled");
+    // } else if (activePlatform === "amazon") {
+    //   amazonBtn.removeAttribute("disabled");
   }
 });
 
@@ -95,6 +96,24 @@ function startReddit() {
   );
 }
 
+function startMedium() {
+  if (!activeTabId) {
+    console.log("Active Tab ID missing!");
+    return;
+  }
+
+  chrome.scripting.executeScript(
+    {
+      target: { tabId: activeTabId },
+      files: ["js/medium.js"],
+    },
+    function () {
+      mediumBtn.innerHTML = "Stop";
+      mediumBtn.onclick = stopScriptExecution;
+    }
+  );
+}
+
 function stopScriptExecution() {
   console.log("Stop script execution");
   chrome.tabs.sendMessage(activeTabId, {
@@ -104,5 +123,8 @@ function stopScriptExecution() {
   if (activePlatform === "reddit") {
     redditBtn.innerHTML = "Start";
     redditBtn.onclick = startReddit;
+  } else if (activePlatform === "medium") {
+    mediumBtn.innerHTML = "Start";
+    mediumBtn.onclick = startMedium;
   }
 }
