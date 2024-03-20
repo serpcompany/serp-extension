@@ -5,6 +5,7 @@
 .speed-div {
     display: flex;
     align-items: center;
+    justify-content: space-between;
 }
 
 .speed-div input {
