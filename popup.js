@@ -1,27 +1,50 @@
 // 1 seconds (1000 ms)
 const defaultSpeed = 1000;
 
-// Read speed from Chrome storage
-chrome.storage.local.get(["speed"], function (result) {
-  const redditSpeedInput = document.getElementById("redditSpeedInput");
-
-  if (result?.speed === undefined) {
-    redditSpeedInput.value = defaultSpeed;
-    chrome.storage.local.set({ speed: defaultSpeed }, function () {
-      console.log("Speed is set to " + defaultSpeed);
+function getStorageValue(key) {
+  return new Promise((resolve, reject) => {
+    chrome.storage.local.get([key], function (result) {
+      if (result[key] === undefined) {
+        chrome.storage.local.set({ [key]: defaultSpeed }, function () {
+          resolve(defaultSpeed);
+        });
+      } else {
+        resolve(result[key]);
+      }
     });
-  } else {
-    redditSpeedInput.value = result.speed;
+  });
+}
+
+[
+  "redditSpeed",
+  "mediumSpeedEachClap",
+  "mediumSpeedEachArticle",
+  "mediumSpeedPageScroll",
+].map(async (key) => {
+  if (key === "redditSpeed") {
+    console.log(key);
+    console.log(await getStorageValue(key));
   }
+
+  const val = document.getElementById(key);
+  val.value = await getStorageValue(key);
 });
 
-// Set speed from the Popup
-document.getElementById("redditSpeedInputBtn").onclick = function () {
-  var speed = document.getElementById("redditSpeedInput").value;
-  chrome.storage.local.set({ speed: speed }, function () {
-    console.log("Speed is set to " + speed);
-  });
-};
+[
+  "redditSpeedBtn",
+  "mediumSpeedEachClapBtn",
+  "mediumSpeedEachArticleBtn",
+  "mediumSpeedPageScrollBtn",
+].map((key) => {
+  document.getElementById(key).onclick = function () {
+    const storageKey = key.replace("Btn", "");
+
+    var speed = document.getElementById(storageKey).value;
+    chrome.storage.local.set({ [storageKey]: speed }, function () {
+      console.log(storageKey, "speed set to " + speed);
+    });
+  };
+});
 
 const redditBtn = document.getElementById("redditBtn");
 redditBtn.onclick = startReddit;

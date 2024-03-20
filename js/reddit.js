@@ -1,8 +1,8 @@
 var __clapper_intervalId;
 var __clapper_interval_speed;
 
-chrome.storage.local.get(["speed"], function (result) {
-  __clapper_interval_speed = result.speed;
+chrome.storage.local.get(["redditSpeed"], function (result) {
+  __clapper_interval_speed = result.redditSpeed;
 });
 
 function redditScript() {

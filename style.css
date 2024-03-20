@@ -1,15 +1,25 @@
 .body {
-    width: 200px;
+    width: 300px;
 }
 
 .speed-div {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin-bottom: 6px;
+}
+
+.speed-div-content {
+    display: flex;
+    align-items: center;
 }
 
 .speed-div input {
-    margin-right: 10px;
+    margin-right: 8px;
+}
+
+.speed-div-content p {
+    margin: 0
 }
 
 .platform-list {
