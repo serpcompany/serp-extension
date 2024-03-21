@@ -17,6 +17,7 @@ function getStorageValue(key) {
 
 [
   "redditSpeed",
+  "amazonSpeed",
   "mediumSpeedEachClap",
   "mediumSpeedEachArticle",
   "mediumSpeedPageScroll",
@@ -32,6 +33,7 @@ function getStorageValue(key) {
 
 [
   "redditSpeedBtn",
+  "amazonSpeedBtn",
   "mediumSpeedEachClapBtn",
   "mediumSpeedEachArticleBtn",
   "mediumSpeedPageScrollBtn",
@@ -50,7 +52,8 @@ const redditBtn = document.getElementById("redditBtn");
 redditBtn.onclick = startReddit;
 const mediumBtn = document.getElementById("mediumBtn");
 mediumBtn.onclick = startMedium;
-// const amazonBtn = document.getElementById("amazonBtn");
+const amazonBtn = document.getElementById("amazonBtn");
+amazonBtn.onclick = startAmazon;
 
 let activePlatform;
 chrome.storage.local.get(["activePlatform"], function (result) {
@@ -61,15 +64,15 @@ chrome.storage.local.get(["activePlatform"], function (result) {
     redditBtn.removeAttribute("disabled");
   } else if (activePlatform === "medium") {
     mediumBtn.removeAttribute("disabled");
-    // } else if (activePlatform === "amazon") {
-    //   amazonBtn.removeAttribute("disabled");
+  } else if (activePlatform === "amazon") {
+    amazonBtn.removeAttribute("disabled");
   }
 });
 
 function resetBtnState() {
   redditBtn.setAttribute("disabled", "disabled");
   mediumBtn.setAttribute("disabled", "disabled");
-  // amazonBtn.setAttribute("disabled", "disabled");
+  amazonBtn.setAttribute("disabled", "disabled");
 }
 
 let activeTabId = "";
@@ -114,6 +117,24 @@ function startMedium() {
   );
 }
 
+function startAmazon() {
+  if (!activeTabId) {
+    console.log("Active Tab ID missing!");
+    return;
+  }
+
+  chrome.scripting.executeScript(
+    {
+      target: { tabId: activeTabId },
+      files: ["js/amazon.js"],
+    },
+    function () {
+      amazonBtn.innerHTML = "Stop";
+      amazonBtn.onclick = stopScriptExecution;
+    }
+  );
+}
+
 function stopScriptExecution() {
   console.log("Stop script execution");
   chrome.tabs.sendMessage(activeTabId, {
@@ -126,5 +147,8 @@ function stopScriptExecution() {
   } else if (activePlatform === "medium") {
     mediumBtn.innerHTML = "Start";
     mediumBtn.onclick = startMedium;
+  } else if (activePlatform === "amazon") {
+    amazonBtn.innerHTML = "Start";
+    amazonBtn.onclick = startAmazon;
   }
 }
