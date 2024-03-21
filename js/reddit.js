@@ -6,10 +6,6 @@ chrome.storage.local.get(["redditSpeed"], function (result) {
 });
 
 function redditScript() {
-  function randomDelay(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-  }
-
   function upvote() {
     const buttons = document.querySelectorAll('[data-click-id="upvote"]');
     buttons.forEach((b) => {
@@ -33,7 +29,7 @@ function redditScript() {
 
   upvote();
   // Run upvote function every X to X seconds
-  __clapper_intervalId = setInterval(upvote, randomDelay(2000, 8000));
+  __clapper_intervalId = setInterval(upvote, __clapper_interval_speed);
 }
 
 redditScript();
