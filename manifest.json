@@ -6,7 +6,7 @@
   "name": "SERP Extension",
   "author": "Devin Schumacher @ SERP https://serp.co",
   "version": "4",
-  "description": "Automating claps/upvotes on medium.com & reddit.com & support SERP Free Software",
+  "description": "A multi-purpose extension for increasing productivity online.",
   "permissions": ["activeTab", "scripting", "storage", "tabs"],
   "background": {
     "service_worker": "background.js"
