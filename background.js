@@ -1,22 +1,26 @@
 // background.js
 
-chrome.action.onClicked.addListener((tab) => {
-    if (tab.url.startsWith('http://') || tab.url.startsWith('https://')) {
-        let scriptToExecute = '';
-
-        if (tab.url.includes('medium.com')) {
-            scriptToExecute = 'js/medium.js';
-        } else if (tab.url.includes('reddit.com')) {
-            scriptToExecute = 'js/reddit.js';
-        } else if (tab.url.includes('amazon.com') || tab.url.includes('amzn.to')) {
-            scriptToExecute = 'js/amazon.js';
-        }
-
-        if (chrome.scripting && scriptToExecute) {
-            chrome.scripting.executeScript({
-                target: {tabId: tab.id},
-                files: [scriptToExecute]
-            });
-        }
-    }
+chrome.tabs.onActivated.addListener(function (activeInfo) {
+  chrome.tabs.get(activeInfo.tabId, function (tab) {
+    var tabUrl = tab.url;
+    setActivePlatform(tabUrl)
+  })
 });
+
+function setActivePlatform(url) {
+  if (url.startsWith('http://') || url.startsWith('https://')) {
+    let activePlatform = '';
+
+    if (url.includes('medium.com')) {
+      activePlatform = 'medium'
+    } else if (url.includes('new.reddit.com')) {
+      activePlatform = 'reddit'
+    } else if (url.includes('amazon.com') || url.includes('amzn.to')) {
+      activePlatform = 'amazon'
+    }
+
+    chrome.storage.local.set({activePlatform: activePlatform}, function () {
+      console.log('Active platform is:', activePlatform);
+    })
+  }
+}

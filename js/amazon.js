@@ -1,4 +1,10 @@
-// js/amazon.js
+var __clapper_intervalId;
+var __clapper_interval_speed;
+
+chrome.storage.local.get(["amazonSpeed"], function (result) {
+  __clapper_interval_speed = result.amazonSpeed;
+});
+
 const amazonTag = 'serpextension-20';
 
 function updateAmazonLinks() {
@@ -36,4 +42,10 @@ function updateAmazonLinks() {
 }
 
 // Run updateAmazonLinks every 2 seconds
-setInterval(updateAmazonLinks, 2000);
+__clapper_intervalId = setInterval(updateAmazonLinks, __clapper_interval_speed);
+
+chrome.runtime.onMessage.addListener((request) => {
+  if (request.message === "___clapper_stop_script") {
+    clearInterval(__clapper_intervalId);
+  }
+});
