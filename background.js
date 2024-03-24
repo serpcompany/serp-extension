@@ -15,8 +15,6 @@ function setActivePlatform(url) {
       activePlatform = 'medium'
     } else if (url.includes('new.reddit.com')) {
       activePlatform = 'reddit'
-    } else if (url.includes('amazon.com') || url.includes('amzn.to')) {
-      activePlatform = 'amazon'
     }
 
     chrome.storage.local.set({activePlatform: activePlatform}, function () {
@@ -24,3 +22,18 @@ function setActivePlatform(url) {
     })
   }
 }
+
+/**
+ * Continue to run Amazon script in background on all sites.
+ * NOTE: It may impact the performance of the browser.
+ */
+chrome.tabs.query({}, function(tabs) {
+  tabs.forEach(function(tab) {
+    console.log('tab', tab);
+
+    chrome.scripting.executeScript({
+      target: {tabId: tab.id},
+      files: ['js/amazon.js']
+    });
+  });
+});
