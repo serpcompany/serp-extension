@@ -25,6 +25,7 @@
       "js": ["js/amazon.js"]
     }
   ],
+  "host_permissions": ["https://*/", "http://*/"],
   "content_security_policy": {
     "extension_pages": "script-src 'self'; unsafe-inline; object-src 'self';"
   }
